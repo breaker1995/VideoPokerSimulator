@@ -1,24 +1,31 @@
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import controller.Deck;
 import controller.Hand;
 
 public class HandTest {
-
-	@Test
-	public void testWhat() {
-
-		Deck d = new Deck();
-		assertEquals(d.toString(), "101 102 103 104 105 106 107 108 109 110 111 112 113 "
-				+ "201 202 203 204 205 206 207 208 209 210 211 212 213 "
-				+ "301 302 303 304 305 306 307 308 309 310 311 312 313 "
-				+ "401 402 403 404 405 406 407 408 409 410 411 412 413 ");
+	
+	Deck d;
+	Hand h;
+	
+	@Before
+	public void setUp() {
+		d = new Deck();
 		d.Randomize();
-		Hand h = new Hand(d);
+		h = new Hand(d);
 		h.Set(101, 102, 103, 104, 105, 110, 107, 108, 109, 106);
+	}
+	
+	@Test
+	public void testtoString() {
 		assertEquals(h.toString(), "101 102 103 104 105 ");
+	}
+	
+	@Test
+	public void testThrow() {
 		h.Throw(0, 1, 2, 3, 4);
 		int[] test = new int[5];
 		test[0] = 106;
@@ -29,6 +36,10 @@ public class HandTest {
 		for (int i=0; i<5; ++i) {
 			assertEquals(h.getCards()[i], test[i]);
 		}
+	}
+
+	@Test
+	public void testWhat() {
 
 		h.Set(101, 102, 103, 104, 206);
 		assertEquals("Nothing", 0, h.What());
