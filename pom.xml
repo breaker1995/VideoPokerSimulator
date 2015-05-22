@@ -56,7 +56,6 @@
 	<profiles>
 		<profile>
 			<id>jul</id>
-
 			<dependencies>
 				<dependency>
 					<groupId>org.slf4j</groupId>
@@ -79,7 +78,6 @@
 		</profile>
 		<profile>
 			<id>simple</id>
-
 			<dependencies>
 				<dependency>
 					<groupId>org.slf4j</groupId>

@@ -29,6 +29,12 @@ import org.xml.sax.SAXException;
  *
  */
 public class ScoreHandler {
+	
+	
+	/*
+	 * String for storing the file path.
+	 */
+	final String path = "target" + File.separatorChar + "classes" + File.separatorChar;
 
 	/**
 	 * The current highscore.
@@ -51,7 +57,7 @@ public class ScoreHandler {
 
 		try {
 
-			xmlFile = new File("highscore.xml");
+			xmlFile = new File(path+"highscore.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder dbBuilder = dbFactory.newDocumentBuilder();
@@ -92,7 +98,6 @@ public class ScoreHandler {
 			// ---------
 			try {
 
-				xmlFile = new File("highscore.xml");
 				DocumentBuilderFactory dbFactory = DocumentBuilderFactory
 						.newInstance();
 				DocumentBuilder dbBuilder = dbFactory.newDocumentBuilder();
@@ -117,9 +122,8 @@ public class ScoreHandler {
 				Transformer transform = tfactory.newTransformer();
 				DOMSource source = new DOMSource(doc);
 				StreamResult result = new StreamResult(
-						new File("highscore.xml"));
+						new File(path+"highscore.xml"));
 				transform.transform(source, result);
-				// log.Create();
 				logger.info("No input file found, creating default file.");
 
 			} catch (TransformerException ex) {
@@ -152,25 +156,6 @@ public class ScoreHandler {
 
 		try {
 
-			/*
-			 * //File xmlFile = new File("highscore.xml");
-			 * DocumentBuilderFactory dbFactory = DocumentBuilderFactory
-			 * .newInstance(); DocumentBuilder dbBuilder =
-			 * dbFactory.newDocumentBuilder(); Document doc =
-			 * dbBuilder.parse(xmlFile);
-			 * 
-			 * NodeList nList = doc.getElementsByTagName("highscore"); for (int
-			 * i = 0; i < nList.getLength(); ++i) { Node node = nList.item(i);
-			 * if (node.getNodeType() == Node.ELEMENT_NODE) { Element e =
-			 * (Element) node; ///*System.out.println("time: " +
-			 * e.getAttribute("time"));/
-			 * 
-			 * System.out.println(this.getScore());
-			 * e.appendChild(doc.createTextNode("10"));
-			 * System.out.println("scoreQ_Q: " +
-			 * e.getElementsByTagName("score").item(0) .getTextContent()); } }
-			 */
-			xmlFile = new File("highscore.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder dbBuilder = dbFactory.newDocumentBuilder();
@@ -178,11 +163,6 @@ public class ScoreHandler {
 
 			Element root = doc.createElement("highscore");
 			doc.appendChild(root);
-
-			/*
-			 * Attr attr = doc.createAttribute("value"); attr.setValue("0");
-			 * root.setAttributeNode(attr);
-			 */
 
 			Date d = new Date();
 			root.setAttribute("time", d.toString());
@@ -192,14 +172,11 @@ public class ScoreHandler {
 					.getScore())));
 			root.appendChild(name);
 
-			// this.setScore(0);
-
 			TransformerFactory tfactory = TransformerFactory.newInstance();
 			Transformer transform = tfactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File("highscore.xml"));
+			StreamResult result = new StreamResult(new File(path+"highscore.xml"));
 			transform.transform(source, result);
-			// log.Set(this.score, d.toString());
 			logger.trace("New highscore of " + this.score
 					+ " was reached at " + d);
 
