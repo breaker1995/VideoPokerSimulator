@@ -45,6 +45,10 @@ public class ScoreHandler {
 	 * The XML file that stores the highscore.
 	 */
 	File xmlFile;
+	DocumentBuilderFactory dbFactory;
+	DocumentBuilder dbBuilder;
+	Document doc;
+	NodeList nList;
 	/**
 	 * The logger that logs changes to the highscore and errors.
 	 */
@@ -60,13 +64,13 @@ public class ScoreHandler {
 		try {
 			//getClass().getResource
 			xmlFile = new File(this.getClass().getResource("/highscore.xml").getFile());
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
+			dbFactory = DocumentBuilderFactory
 					.newInstance();
-			DocumentBuilder dbBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dbBuilder.parse(xmlFile);
+			dbBuilder = dbFactory.newDocumentBuilder();
+			doc = dbBuilder.parse(xmlFile);
 			System.out.println("ASDASDASD");
 
-			NodeList nList = doc.getElementsByTagName("highscore");
+			nList = doc.getElementsByTagName("highscore");
 			for (int i = 0; i < nList.getLength(); ++i) {
 				Node node = nList.item(i);
 				if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -78,7 +82,7 @@ public class ScoreHandler {
 					System.out.println(this.score + " " + Integer.parseInt(e
 							.getElementsByTagName("score").item(0)
 							.getTextContent()));
-					e.setNodeValue(Integer.toString(this.getScore()));
+					//e.setNodeValue(Integer.toString(this.getScore()));
 					logger.info("Input file found with a highscore of "
 							+ this.getScore() + " at " + new Date().toString());
 				}
@@ -179,30 +183,31 @@ public class ScoreHandler {
 		
 		try {
 			//getClass().getResource
-			xmlFile = new File(this.getClass().getResource("/highscore.xml").getFile());
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
+			//xmlFile = new File(this.getClass().getResource("/highscore.xml").getFile());
+			/*DocumentBuilderFactory dbFactory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder dbBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dbBuilder.parse(xmlFile);
+			Document doc = dbBuilder.parse(xmlFile);*/
 
-			NodeList nList = doc.getElementsByTagName("highscore");
+			//NodeList nList = doc.getElementsByTagName("highscore");
 			for (int i = 0; i < nList.getLength(); ++i) {
 				Node node = nList.item(i);
 				if (node.getNodeType() == Node.ELEMENT_NODE) {
 					Element e = (Element) node;
+					
 
-					System.out.println(this.score);
-					/*this.score = Integer.parseInt(e
-							.getElementsByTagName("score").item(0)
-							.getTextContent());*/
+					System.out.println(this.getScore());
+
+					e.getElementsByTagName("score").item(0).setTextContent(Integer.toString(this.score));
 					Date d = new Date();
-					//FUCK
-					e.setAttribute("time", d.toString());
-					e.setNodeValue(Integer.toString(this.getScore()));
+					System.out.println(this.score + " " + Integer.parseInt(e
+							.getElementsByTagName("score").item(0)
+							.getTextContent()));
 					logger.trace("New highscore of " + this.score
 							+ " was reached at " + d.toString());
 				}
 			}
+
 			TransformerFactory tfactory = TransformerFactory.newInstance();
 			Transformer transform = tfactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
@@ -210,17 +215,17 @@ public class ScoreHandler {
 					xmlFile);
 			transform.transform(source, result);
 
-		} catch (ParserConfigurationException e) {
+		} /*catch (ParserConfigurationException e) {
 			logger.error("ParserConfigurationException", e);
 		} catch (SAXException e) {
 			logger.error("SAXException", e);
-		} catch (TransformerConfigurationException e) {
+		}*/ catch (TransformerConfigurationException e) {
 			e.printStackTrace();
 		} catch (TransformerException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
+		} /*catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 }
