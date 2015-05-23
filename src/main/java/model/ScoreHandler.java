@@ -9,6 +9,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -54,37 +55,30 @@ public class ScoreHandler {
 	 * If it does not exist, a default file is created.
 	 */
 	public ScoreHandler() {
+		System.out.println("WATWAT");
 
 		try {
-
-			xmlFile = new File(path+"highscore.xml");
+			//getClass().getResource
+			xmlFile = new File(this.getClass().getResource("/highscore.xml").getFile());
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder dbBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dbBuilder.parse(xmlFile);
+			System.out.println("ASDASDASD");
 
 			NodeList nList = doc.getElementsByTagName("highscore");
 			for (int i = 0; i < nList.getLength(); ++i) {
 				Node node = nList.item(i);
 				if (node.getNodeType() == Node.ELEMENT_NODE) {
 					Element e = (Element) node;
-					/* System.out.println("time: " + e.getAttribute("time")); */
-					/*
-					 * System.out.println("score: " +
-					 * e.getElementsByTagName("score").item(0)
-					 * .getTextContent()); System.out.println("time: " +
-					 * e.getAttribute("time"));
-					 */
-					/*
-					 * this.setScore(Integer.parseInt(e
-					 * .getElementsByTagName("score").item(0)
-					 * .getTextContent()));
-					 */
+
 					this.score = Integer.parseInt(e
 							.getElementsByTagName("score").item(0)
 							.getTextContent());
+					System.out.println(this.score + " " + Integer.parseInt(e
+							.getElementsByTagName("score").item(0)
+							.getTextContent()));
 					e.setNodeValue(Integer.toString(this.getScore()));
-					// log.Read(this.score, e.getAttribute("time"));
 					logger.info("Input file found with a highscore of "
 							+ this.getScore() + " at " + new Date().toString());
 				}
@@ -94,7 +88,8 @@ public class ScoreHandler {
 			logger.error("ParserConfigurationException", e);
 		} catch (SAXException e) {
 			logger.error("SAXException", e);
-		} catch (FileNotFoundException e) {
+		} catch (NullPointerException | FileNotFoundException e) {
+			System.out.println(":C");
 			// ---------
 			try {
 
@@ -106,10 +101,6 @@ public class ScoreHandler {
 				Element root = doc.createElement("highscore");
 				doc.appendChild(root);
 
-				/*
-				 * Attr attr = doc.createAttribute("value"); attr.setValue("0");
-				 * root.setAttributeNode(attr);
-				 */
 				root.setAttribute("time", "never");
 
 				Element name = doc.createElement("score");
@@ -122,7 +113,7 @@ public class ScoreHandler {
 				Transformer transform = tfactory.newTransformer();
 				DOMSource source = new DOMSource(doc);
 				StreamResult result = new StreamResult(
-						new File(path+"highscore.xml"));
+						new File("highscore.xml"));
 				transform.transform(source, result);
 				logger.info("No input file found, creating default file.");
 
@@ -154,7 +145,7 @@ public class ScoreHandler {
 	public void setScore(int score) {
 		this.score = score;
 
-		try {
+		/*try {
 
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
 					.newInstance();
@@ -175,7 +166,7 @@ public class ScoreHandler {
 			TransformerFactory tfactory = TransformerFactory.newInstance();
 			Transformer transform = tfactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File(path+"highscore.xml"));
+			StreamResult result = new StreamResult(new File("highscore.xml"));
 			transform.transform(source, result);
 			logger.trace("New highscore of " + this.score
 					+ " was reached at " + d);
@@ -184,6 +175,51 @@ public class ScoreHandler {
 			logger.error("ParserConfigurationException", e);
 		} catch (TransformerException e) {
 			logger.error("TransformerException", e);
+		}*/
+		
+		try {
+			//getClass().getResource
+			xmlFile = new File(this.getClass().getResource("/highscore.xml").getFile());
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
+					.newInstance();
+			DocumentBuilder dbBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dbBuilder.parse(xmlFile);
+
+			NodeList nList = doc.getElementsByTagName("highscore");
+			for (int i = 0; i < nList.getLength(); ++i) {
+				Node node = nList.item(i);
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					Element e = (Element) node;
+
+					System.out.println(this.score);
+					/*this.score = Integer.parseInt(e
+							.getElementsByTagName("score").item(0)
+							.getTextContent());*/
+					Date d = new Date();
+					//FUCK
+					e.setAttribute("time", d.toString());
+					e.setNodeValue(Integer.toString(this.getScore()));
+					logger.trace("New highscore of " + this.score
+							+ " was reached at " + d.toString());
+				}
+			}
+			TransformerFactory tfactory = TransformerFactory.newInstance();
+			Transformer transform = tfactory.newTransformer();
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(
+					xmlFile);
+			transform.transform(source, result);
+
+		} catch (ParserConfigurationException e) {
+			logger.error("ParserConfigurationException", e);
+		} catch (SAXException e) {
+			logger.error("SAXException", e);
+		} catch (TransformerConfigurationException e) {
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

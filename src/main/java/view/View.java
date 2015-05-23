@@ -2,7 +2,6 @@ package view;
 
 import java.awt.EventQueue;
 import java.awt.event.*;
-import java.io.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -82,10 +81,7 @@ public class View extends JFrame {
 
 	public View() {
 		
-		//URL f = this.getClass().getClassLoader().getResource("relative path");
-		final String path = "target" + File.separatorChar + "classes" + File.separatorChar;
-		
-		
+		this.setTitle("Video Poker Simulator");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 500);
 		contentPane = new JPanel();
@@ -161,13 +157,12 @@ public class View extends JFrame {
 					String st4 = Integer.toString(h.getCards()[3]);
 					String st5 = Integer.toString(h.getCards()[4]);
 					
-					//URL s = ClassLoader.getSystemResource(path+st1+".png");
 
-					card1.setIcon(new ImageIcon(path+st1+".png"));
-					card2.setIcon(new ImageIcon(path+st2+".png"));
-					card3.setIcon(new ImageIcon(path+st3+".png"));
-					card4.setIcon(new ImageIcon(path+st4+".png"));
-					card5.setIcon(new ImageIcon(path+st5+".png"));
+					card1.setIcon(new ImageIcon(getClass().getResource("/"+st1+".png")));
+					card2.setIcon(new ImageIcon(getClass().getResource("/"+st2+".png")));
+					card3.setIcon(new ImageIcon(getClass().getResource("/"+st3+".png")));
+					card4.setIcon(new ImageIcon(getClass().getResource("/"+st4+".png")));
+					card5.setIcon(new ImageIcon(getClass().getResource("/"+st5+".png")));
 
 					int multipler = h.What();
 					Main.setMoney(Main.getMoney()+Main.getBet()*(multipler-1));
@@ -215,16 +210,12 @@ public class View extends JFrame {
 							String st4 = Integer.toString(h.getCards()[3]);
 							String st5 = Integer.toString(h.getCards()[4]);
 							
-							
-							//URL s = ClassLoader.getSystemResource(path+st1+".png");
-							
-							//System.out.println(s.toString());
 
-							card1.setIcon(new ImageIcon(path+st1+".png"));
-							card2.setIcon(new ImageIcon(path+st2+".png"));
-							card3.setIcon(new ImageIcon(path+st3+".png"));
-							card4.setIcon(new ImageIcon(path+st4+".png"));
-							card5.setIcon(new ImageIcon(path+st5+".png"));
+							card1.setIcon(new ImageIcon(getClass().getResource("/"+st1+".png")));
+							card2.setIcon(new ImageIcon(getClass().getResource("/"+st2+".png")));
+							card3.setIcon(new ImageIcon(getClass().getResource("/"+st3+".png")));
+							card4.setIcon(new ImageIcon(getClass().getResource("/"+st4+".png")));
+							card5.setIcon(new ImageIcon(getClass().getResource("/"+st5+".png")));
 
 							rdbtn1.setBounds(50, 120, 100, 20);
 							contentPane.add(rdbtn1);
