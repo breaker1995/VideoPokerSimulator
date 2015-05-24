@@ -2,7 +2,7 @@ package controller;
 
 import java.awt.EventQueue;
 
-import model.ScoreHandler;
+import model.ScoreDAO;
 
 /**
  * This program simulates a <b>Jacks or Better</b> video poker game. You are
@@ -29,7 +29,7 @@ public class Main {
 	/**
 	 * A handler for accessing and updating the highscore.
 	 */
-	private static ScoreHandler sh;
+	private static ScoreDAO sd;
 
 	/**
 	 * The main method of the program. A new deck is generated, and is then
@@ -42,7 +42,7 @@ public class Main {
 		/**
 		 * A handler for storing and updating the highscore.
 		 */
-		sh = new ScoreHandler();
+		sd = new ScoreDAO();
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -54,6 +54,8 @@ public class Main {
 				}
 			}
 		});
+		
+		//sh.xmlFile.close();
 
 		/**
 		 * int money = 10000, bet = 0; Scanner sc = new Scanner(System.in);
@@ -112,12 +114,12 @@ public class Main {
 	 * 
 	 * @param money the money
 	 */
-	public static void setMoney(int money) {
+	public static void setMoney(int money, String name) {
 		Main.money = money;
-		int previousmaxmoney = sh.getScore();
-		
+		int previousmaxmoney = sd.getScore();
+		System.out.println(money + " " + previousmaxmoney);
 		if (money > previousmaxmoney) {
-			sh.setScore(money);
+			sd.setScore(money, name);
 		}
 	}
 

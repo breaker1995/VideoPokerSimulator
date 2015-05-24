@@ -25,7 +25,9 @@ public class View extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
+	private JTextField textField2;
 	private JLabel label;
+	private JLabel label2;
 	private JLabel card1;
 	private JLabel card2;
 	private JLabel card3;
@@ -35,55 +37,49 @@ public class View extends JFrame {
 	private boolean canDrop = true;
 	private Hand h;
 	private Deck d;
+	private String name;
+
 	/**
-	 * The main method of the program. A new deck is generated, and is then
-	 * randomized. Then, a 5-card hand is dealt.
-	 * 
-	 * @param args unused
+	 * @return the name
 	 */
-	public static void main(String[] args) {
-
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					View frame = new View();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-
-		/**
-		 * int money = 10000, bet = 0; Scanner sc = new Scanner(System.in);
-		 * while (money != 0) { while (bet <= 0 || bet > money) {
-		 * System.out.printf( "Enter your bet. Your current balance is %d.\n",
-		 * money); bet = sc.nextInt(); } Deck d = new Deck(); d.Randomize();
-		 * Hand h = new Hand(d); // h.Set(109, 206, 301, 307, 308); // int w =
-		 * h.What(); System.out.println(h);
-		 * System.out.println("Enter card(s) to throw (if any).");
-		 * BufferedReader br = new BufferedReader(new InputStreamReader(
-		 * System.in)); ArrayList<String> t = new ArrayList<String>();
-		 * t.add(br.readLine()); int k = 0; int[] v = new int[0]; for (String
-		 * wtf : t) { String[] line = wtf.split(" "); v = new int[line.length];
-		 * for (String s : line) { v[k] = Integer.parseInt(s); ++k; } }
-		 * h.Throw(v); int multipler = h.What(); System.out.println(h);
-		 * System.out.println(multipler); money = money - bet + bet * multipler;
-		 * // System.out.println(money);
-		 * 
-		 * // if (true) { System.out.println(h); System.out.println(h.What());
-		 * // }
-		 * 
-		 * bet = 0; } sc.close();
-		 */
-
+	public String getName() {
+		return name;
 	}
 
+	/**
+	 * @param name
+	 *            the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * int money = 10000, bet = 0; Scanner sc = new Scanner(System.in); while
+	 * (money != 0) { while (bet <= 0 || bet > money) { System.out.printf(
+	 * "Enter your bet. Your current balance is %d.\n", money); bet =
+	 * sc.nextInt(); } Deck d = new Deck(); d.Randomize(); Hand h = new Hand(d);
+	 * // h.Set(109, 206, 301, 307, 308); // int w = h.What();
+	 * System.out.println(h);
+	 * System.out.println("Enter card(s) to throw (if any)."); BufferedReader br
+	 * = new BufferedReader(new InputStreamReader( System.in));
+	 * ArrayList<String> t = new ArrayList<String>(); t.add(br.readLine()); int
+	 * k = 0; int[] v = new int[0]; for (String wtf : t) { String[] line =
+	 * wtf.split(" "); v = new int[line.length]; for (String s : line) { v[k] =
+	 * Integer.parseInt(s); ++k; } } h.Throw(v); int multipler = h.What();
+	 * System.out.println(h); System.out.println(multipler); money = money - bet
+	 * + bet * multipler; // System.out.println(money);
+	 * 
+	 * // if (true) { System.out.println(h); System.out.println(h.What()); // }
+	 * 
+	 * bet = 0; } sc.close();
+	 */
+
 	public View() {
-		
+
 		this.setTitle("Video Poker Simulator");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 500);
+		setBounds(100, 100, 572, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -108,13 +104,21 @@ public class View extends JFrame {
 		contentPane.add(card5);
 
 		textField = new JTextField();
-		textField.setBounds(150, 250, 100, 20);
+		textField.setBounds(236, 250, 100, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
-		
 
-		label = new JLabel("Your money: " +  Main.getMoney() + " Your bet: ");
-		label.setBounds(100, 170, 300, 25);
+		textField2 = new JTextField();
+		textField2.setBounds(236, 200, 100, 20);
+		contentPane.add(textField2);
+		textField2.setColumns(10);
+
+		label2 = new JLabel("Enter your name: ");
+		label2.setBounds(225, 170, 300, 25);
+		contentPane.add(label2);
+
+		label = new JLabel("Your money: " + Main.getMoney() + " Your bet: ");
+		label.setBounds(175, 220, 300, 25);
 		contentPane.add(label);
 
 		final JRadioButton rdbtn1 = new JRadioButton("");
@@ -136,7 +140,7 @@ public class View extends JFrame {
 					howMany += (rdbtn5.isSelected()) ? 1 : 0;
 					int[] cardsToDrop = new int[0];
 					cardsToDrop = new int[howMany];
-					
+
 					int c = 0;
 					if (rdbtn1.isSelected())
 						cardsToDrop[c++] = (rdbtn1.isSelected()) ? 0 : 0;
@@ -156,19 +160,24 @@ public class View extends JFrame {
 					String st3 = Integer.toString(h.getCards()[2]);
 					String st4 = Integer.toString(h.getCards()[3]);
 					String st5 = Integer.toString(h.getCards()[4]);
-					
 
-					card1.setIcon(new ImageIcon(getClass().getResource("/"+st1+".png")));
-					card2.setIcon(new ImageIcon(getClass().getResource("/"+st2+".png")));
-					card3.setIcon(new ImageIcon(getClass().getResource("/"+st3+".png")));
-					card4.setIcon(new ImageIcon(getClass().getResource("/"+st4+".png")));
-					card5.setIcon(new ImageIcon(getClass().getResource("/"+st5+".png")));
+					card1.setIcon(new ImageIcon(getClass().getResource(
+							"/" + st1 + ".png")));
+					card2.setIcon(new ImageIcon(getClass().getResource(
+							"/" + st2 + ".png")));
+					card3.setIcon(new ImageIcon(getClass().getResource(
+							"/" + st3 + ".png")));
+					card4.setIcon(new ImageIcon(getClass().getResource(
+							"/" + st4 + ".png")));
+					card5.setIcon(new ImageIcon(getClass().getResource(
+							"/" + st5 + ".png")));
 
 					int multipler = h.What();
-					Main.setMoney(Main.getMoney()+Main.getBet()*(multipler-1));
+					Main.setMoney(Main.getMoney() + Main.getBet()
+							* (multipler - 1), name);
 
 					canDrop = false;
-					
+
 					btn.setBounds(0, 0, 0, 0);
 					rdbtn1.setBounds(0, 0, 0, 0);
 					rdbtn2.setBounds(0, 0, 0, 0);
@@ -182,7 +191,8 @@ public class View extends JFrame {
 					rdbtn5.setSelected(false);
 
 					Main.setBet(0);
-					label.setText("Your money: " + Main.getMoney() + " Your bet: " + Main.getBet());
+					label.setText("Your money: " + Main.getMoney()
+							+ " Your bet: " + Main.getBet());
 					canEnterBet = true;
 				}
 			}
@@ -195,6 +205,7 @@ public class View extends JFrame {
 				if (e.getKeyCode() == 10 && t != null && canEnterBet) {
 					try {
 						int temp = Integer.parseInt(t);
+						name = textField2.getText();
 						if (temp > 0 && temp <= Main.getMoney()) {
 							Main.setBet(temp);
 							label.setText("Your money: " + Main.getMoney()
@@ -209,13 +220,17 @@ public class View extends JFrame {
 							String st3 = Integer.toString(h.getCards()[2]);
 							String st4 = Integer.toString(h.getCards()[3]);
 							String st5 = Integer.toString(h.getCards()[4]);
-							
 
-							card1.setIcon(new ImageIcon(getClass().getResource("/"+st1+".png")));
-							card2.setIcon(new ImageIcon(getClass().getResource("/"+st2+".png")));
-							card3.setIcon(new ImageIcon(getClass().getResource("/"+st3+".png")));
-							card4.setIcon(new ImageIcon(getClass().getResource("/"+st4+".png")));
-							card5.setIcon(new ImageIcon(getClass().getResource("/"+st5+".png")));
+							card1.setIcon(new ImageIcon(getClass().getResource(
+									"/" + st1 + ".png")));
+							card2.setIcon(new ImageIcon(getClass().getResource(
+									"/" + st2 + ".png")));
+							card3.setIcon(new ImageIcon(getClass().getResource(
+									"/" + st3 + ".png")));
+							card4.setIcon(new ImageIcon(getClass().getResource(
+									"/" + st4 + ".png")));
+							card5.setIcon(new ImageIcon(getClass().getResource(
+									"/" + st5 + ".png")));
 
 							rdbtn1.setBounds(50, 120, 100, 20);
 							contentPane.add(rdbtn1);
@@ -233,7 +248,7 @@ public class View extends JFrame {
 							contentPane.add(rdbtn5);
 							rdbtn5.setText("DROP");
 
-							btn.setBounds(150, 300, 150, 50);
+							btn.setBounds(211, 300, 150, 50);
 							contentPane.add(btn);
 							btn.setText("Drop");
 							canDrop = true;
