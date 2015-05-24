@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.EventQueue;
 import java.awt.event.*;
 
 import javax.swing.*;
@@ -23,20 +22,77 @@ import controller.Main;
 @SuppressWarnings("serial")
 public class View extends JFrame {
 
+	/**
+	 * The entire Panel.
+	 */
 	private JPanel contentPane;
+	/**
+	 * Name is entered here.
+	 */
 	private JTextField textField;
+	/**
+	 * Bet is entered here.
+	 */
 	private JTextField textField2;
+	/**
+	 * Stores text on the screen.
+	 */
 	private JLabel label;
+	/**
+	 * Stores text on the screen.
+	 */
 	private JLabel label2;
+	/**
+	 * Stores text on the screen.
+	 */
+	private JLabel label3;
+	/**
+	 * Stores text on the screen.
+	 */
+	private JLabel label4;
+	/**
+	 * Stores text on the screen.
+	 */
+	private JLabel label5;
+	/**
+	 * A card.
+	 */
 	private JLabel card1;
+	/**
+	 * A card.
+	 */
 	private JLabel card2;
+	/**
+	 * A card.
+	 */
 	private JLabel card3;
+	/**
+	 * A card.
+	 */
 	private JLabel card4;
+	/**
+	 * A card.
+	 */
 	private JLabel card5;
+	/**
+	 * True when the user can enter bet.
+	 */
 	private boolean canEnterBet = true;
+	/**
+	 * True when the user can drop cards.
+	 */
 	private boolean canDrop = true;
+	/**
+	 * @see controller.Hand
+	 */
 	private Hand h;
+	/**
+	 * @see controller.Deck
+	 */
 	private Deck d;
+	/**
+	 * The name of the player who achieved the highscore.
+	 */
 	private String name;
 
 	/**
@@ -54,7 +110,7 @@ public class View extends JFrame {
 		this.name = name;
 	}
 
-	/**
+	/*
 	 * int money = 10000, bet = 0; Scanner sc = new Scanner(System.in); while
 	 * (money != 0) { while (bet <= 0 || bet > money) { System.out.printf(
 	 * "Enter your bet. Your current balance is %d.\n", money); bet =
@@ -75,6 +131,9 @@ public class View extends JFrame {
 	 * bet = 0; } sc.close();
 	 */
 
+	/**
+	 * The main part of the GUI.
+	 */
 	public View() {
 
 		this.setTitle("Video Poker Simulator");
@@ -112,6 +171,19 @@ public class View extends JFrame {
 		textField2.setBounds(236, 200, 100, 20);
 		contentPane.add(textField2);
 		textField2.setColumns(10);
+
+		label3 = new JLabel(
+				"To start the game, enter your bet and press enter.");
+		label3.setBounds(100, 400, 400, 25);
+		contentPane.add(label3);
+
+		label4 = new JLabel("Name is optional. ");
+		label4.setBounds(100, 415, 400, 25);
+		contentPane.add(label4);
+
+		label5 = new JLabel("The current highscore is: " + Main.getSc());
+		label5.setBounds(100, 430, 450, 25);
+		contentPane.add(label5);
 
 		label2 = new JLabel("Enter your name: ");
 		label2.setBounds(225, 170, 300, 25);

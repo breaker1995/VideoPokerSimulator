@@ -9,7 +9,7 @@ import java.util.Date;
  *
  */
 public class Score {
-	
+
 	/**
 	 * The name of the player who achieved this highscore.
 	 */
@@ -22,13 +22,16 @@ public class Score {
 	 * The date when this highscore was achieved.
 	 */
 	private Date date;
-	
+
 	/**
 	 * Constructor that sets the fields with the given parameters.
 	 * 
-	 * @param name The name
-	 * @param score The score
-	 * @param date The date
+	 * @param name
+	 *            The name
+	 * @param score
+	 *            The score
+	 * @param date
+	 *            The date
 	 */
 	public Score(String name, int score, Date date) {
 		super();
@@ -45,7 +48,8 @@ public class Score {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -59,7 +63,8 @@ public class Score {
 	}
 
 	/**
-	 * @param score the score to set
+	 * @param score
+	 *            the score to set
 	 */
 	public void setScore(int score) {
 		this.score = score;
@@ -73,20 +78,19 @@ public class Score {
 	}
 
 	/**
-	 * @param date the date to set
+	 * @param date
+	 *            the date to set
 	 */
 	public void setDate(Date date) {
 		this.date = date;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "Score [name=" + name + ", score=" + score + ", date=" + date
-				+ "]";
+		return score + " by " + name + " on " + date;
 	}
-	
-	
+
 }

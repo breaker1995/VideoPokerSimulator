@@ -28,7 +28,7 @@ public class ScoreDAO {
 	/**
 	 * The logger.
 	 */
-	Logger LOGGER = LoggerFactory.getLogger(ScoreDAO.class);
+	static Logger LOGGER = LoggerFactory.getLogger(ScoreDAO.class);
 
 	/**
 	 * The constructor.
@@ -41,19 +41,18 @@ public class ScoreDAO {
 		InputStream is = getClass().getClassLoader().getResourceAsStream(
 				"config.properties");
 		if (is == null) {
-			LOGGER.error("Error in config.properties.");
+			LOGGER.error("config.properties could not be found.");
 		}
 		try {
 			prop.load(is);
 		} catch (Exception e) {
-			LOGGER.error("Error in config.properties.", e);
+			LOGGER.error("config.properties is malformed.", e);
 		}
 
-		//ConnectionFactory.setConnection(prop.getProperty("URL"),
-		//		prop.getProperty("USER"), prop.getProperty("PASS"));
+		ConnectionFactory.setConnection(prop.getProperty("URL"),
+				prop.getProperty("USER"), prop.getProperty("PASS"));
 
 		Score sc = getHighscore();
-		System.out.println(sc);
 		score.setName(sc.getName());
 		score.setScore(sc.getScore());
 		score.setDate(sc.getDate());
@@ -68,29 +67,31 @@ public class ScoreDAO {
 		Date d = new Date(new java.util.Date().getTime());
 		Score sc = new Score("Nobody", 0, d);
 		try (Connection conn = ConnectionFactory.getConnection()) {
-			String query = "SELECT * " + "FROM score";
+			String query = "SELECT * " + "FROM score;";
 			PreparedStatement ps = conn.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				sc = new Score(rs.getString(1), rs.getInt(2), rs.getDate(3));
+				LOGGER.trace("Loaded the following highscore: "+sc);
 			}
 		} catch (SQLException e) {
 			try (Connection conn = ConnectionFactory.getConnection()) {
 				String query = "CREATE TABLE score " + "( "
 						+ "name VARCHAR2(50), " + "score NUMBER(10)," + "dat date"
-						+ ")";
+						+ ");";
 				PreparedStatement ps = conn.prepareStatement(query);
 				ps.executeUpdate();
 				query = "INSERT INTO score (name, score, dat)"
-						+ "VALUES (?,?,?)";
+						+ "VALUES (?,?,?);";
 				ps = conn.prepareStatement(query);
 				ps.setString(1, "Nobody");
 				ps.setInt(2, 0);
 				ps.setDate(3, d);
 				ps.executeUpdate();
+				LOGGER.info("Created default score: "+sc);
 
 			} catch (SQLException ex) {
-				ex.printStackTrace();
+				LOGGER.error("Error loading score or creating default score.", e);
 			}
 		}
 		return sc;
@@ -101,8 +102,8 @@ public class ScoreDAO {
 	 * 
 	 * @return the score
 	 */
-	public int getScore() {
-		return score.getScore();
+	public Score getScore() {
+		return score;
 	}
 
 	/**
@@ -116,11 +117,11 @@ public class ScoreDAO {
 	public void setScore(int val, String name) {
 		Date d = new Date(new java.util.Date().getTime());
 		try (Connection conn = ConnectionFactory.getConnection()) {
-			String query = "DELETE FROM score";
+			String query = "DELETE FROM score;";
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.executeUpdate();
 			query = "INSERT INTO score (name, score, dat)"
-					+ "VALUES (?,?,?)";
+					+ "VALUES (?,?,?);";
 			ps = conn.prepareStatement(query);
 			ps.setString(1, name);
 			ps.setInt(2, val);
@@ -128,10 +129,11 @@ public class ScoreDAO {
 			ps.executeUpdate();
 
 		} catch (SQLException ex) {
-			ex.printStackTrace();
+			LOGGER.error("Error updating highscore.",ex);
 		}
 		score.setName(name);
 		score.setScore(val);
 		score.setDate(d);
+		LOGGER.info("New highscore achieved: "+score);
 	}
 }

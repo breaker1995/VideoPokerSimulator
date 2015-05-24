@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.EventQueue;
 
+import model.Score;
 import model.ScoreDAO;
 
 /**
@@ -12,19 +13,23 @@ import model.ScoreDAO;
  * 
  * @author breaker
  * @version 1.0
- * @since 2015-03-24
  */
 public class Main {
 
 	/**
-	 * The bet which is always higher than 0 and lower than the owned money.
+	 * The bet which is always higher than 0 and lower than or equal to the owned money.
 	 */
 	private static int bet = 0;
-	
+
 	/**
 	 * The owned money.
 	 */
 	private static int money = 10000;
+	
+	/**
+	 * The representation of the highscore.
+	 */
+	private static Score sc;
 	
 	/**
 	 * A handler for accessing and updating the highscore.
@@ -35,7 +40,8 @@ public class Main {
 	 * The main method of the program. A new deck is generated, and is then
 	 * randomized. Then, a 5-card hand is dealt.
 	 * 
-	 * @param args unused
+	 * @param args
+	 *            unused
 	 */
 	public static void main(String[] args) {
 
@@ -43,6 +49,7 @@ public class Main {
 		 * A handler for storing and updating the highscore.
 		 */
 		sd = new ScoreDAO();
+		sc = sd.getScore();
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -54,10 +61,8 @@ public class Main {
 				}
 			}
 		});
-		
-		//sh.xmlFile.close();
 
-		/**
+		/*
 		 * int money = 10000, bet = 0; Scanner sc = new Scanner(System.in);
 		 * while (money != 0) { while (bet <= 0 || bet > money) {
 		 * System.out.printf( "Enter your bet. Your current balance is %d.\n",
@@ -81,7 +86,7 @@ public class Main {
 		 */
 
 	}
-	
+
 	/**
 	 * Returns the bet.
 	 * 
@@ -94,7 +99,8 @@ public class Main {
 	/**
 	 * Sets the bet.
 	 * 
-	 * @param bet the bet
+	 * @param bet
+	 *            the bet
 	 */
 	public static void setBet(int bet) {
 		Main.bet = bet;
@@ -110,17 +116,34 @@ public class Main {
 	}
 
 	/**
-	 * Sets the money.
+	 * Sets the money/score.
 	 * 
 	 * @param money the money
+	 * @param name the name
 	 */
 	public static void setMoney(int money, String name) {
 		Main.money = money;
-		int previousmaxmoney = sd.getScore();
-		System.out.println(money + " " + previousmaxmoney);
+		int previousmaxmoney = sd.getScore().getScore();
 		if (money > previousmaxmoney) {
 			sd.setScore(money, name);
+			sc = sd.getScore();
 		}
 	}
+
+	/**
+	 * @return the score
+	 */
+	public static Score getSc() {
+		return sc;
+	}
+
+	/**
+	 * @param sc the score to set
+	 */
+	public static void setSc(Score sc) {
+		Main.sc = sc;
+	}
+	
+	
 
 }

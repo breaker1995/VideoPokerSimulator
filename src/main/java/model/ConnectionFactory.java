@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Handles the connection to the database.
  * <p>
@@ -14,6 +17,10 @@ import java.sql.SQLException;
  */
 public class ConnectionFactory {
 
+	/**
+	 * The logger.
+	 */
+	static Logger LOGGER = LoggerFactory.getLogger(ConnectionFactory.class);
 	/**
 	 * The host URL.
 	 */
@@ -53,7 +60,7 @@ public class ConnectionFactory {
 		try {
 			connection = DriverManager.getConnection(DB_URL, USER, PASS);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error("Error with the given database details.",e);
 		}
 		return connection;
 	}
