@@ -134,10 +134,11 @@
 				<version>1.4</version>
 				<executions>
 					<execution>
-						<id>enforce-versions</id>
+						<id>enforce-java-version</id>
 						<goals>
 							<goal>enforce</goal>
 						</goals>
+						<phase>validate</phase>
 						<configuration>
 							<rules>
 								<requireJavaVersion>
