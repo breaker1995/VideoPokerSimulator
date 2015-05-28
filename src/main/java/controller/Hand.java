@@ -2,7 +2,8 @@ package controller;
 
 /**
  * <h1>Class for storing a 5-card hand and checking it.</h1>
- * This class stores a 5-card hand when given a 52-card deck.
+ * This class stores a 5-card hand when given a 52-card {@link Deck
+ * Deck}.
  * It also stores 5 additional cards which are used when cards are thrown away.
  * 
  * @author breaker
@@ -19,7 +20,8 @@ public class Hand {
 	 * Takes the top 5 cards from the given deck and sorts them for better usage.
 	 * It also takes 5 additional cards from the deck.
 	 * 
-	 * @param d A 52-card deck represented by the Deck class.
+	 * @param d A 52-card deck represented by the {@link Deck
+ * Deck} class.
 	 */
 	public Hand(Deck d) {
 		int i, j;
@@ -44,7 +46,7 @@ public class Hand {
 	/**
 	 * This method was used for debugging purposes.
 	 * You can forcefully set a hand to certain cards with this method in order to easily
-	 * check the result of the <b>What</b> method for certain hands.
+	 * check the result of the {@link #What() What()} method for certain hands.
 	 * 
 	 * @param a First card represented by an integer.
 	 * @param b Second card represented by an integer.
@@ -63,7 +65,7 @@ public class Hand {
 	/**
 	 * This method was used for debugging purposes.
 	 * You can forcefully set a hand to certain cards with this method in order to easily
-	 * check the result of the <b>What</b> method for certain hands.
+	 * check the result of the {@link #What() What()} method for certain hands.
 	 * 
 	 * @param a First card represented by an integer.
 	 * @param b Second card represented by an integer.
@@ -304,7 +306,7 @@ public class Hand {
 	/**
 	 * Determines the value of a hand using several other methods.
 	 * 
-	 * @return int Returns a multipler based on the value of the hand.
+	 * @return int Returns a multiplier based on the value of the hand.
 	 */
 	public int What() {
 		if (this.IsRoyalFlush())

@@ -66,7 +66,7 @@ public class ConnectionFactory {
 	}
 
 	/**
-	 * Calls the {@link #createConnection() createConnection} method and returns
+	 * Calls the {@link #createConnection() createConnection()} method and returns
 	 * the {@link Connection Connection}.
 	 *
 	 * @return the connection

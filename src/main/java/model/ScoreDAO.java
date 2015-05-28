@@ -22,11 +22,11 @@ import org.slf4j.LoggerFactory;
 public class ScoreDAO {
 
 	/**
-	 * The current highscore's details.
+	 * The current highscore's details represented by the {@link Score Score} class.
 	 */
 	private Score score = new Score("Nobody", 0, new Date(new java.util.Date().getTime()));
 	/**
-	 * The logger.
+	 * The logger of this class.
 	 */
 	static Logger LOGGER = LoggerFactory.getLogger(ScoreDAO.class);
 
