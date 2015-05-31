@@ -267,6 +267,7 @@ public class View extends JFrame {
 							+ " Your bet: " + Main.getBet());
 					canEnterBet = true;
 				}
+				label5.setText("The current highscore is: " + Main.getSc());
 			}
 		});
 
